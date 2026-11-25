@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>올팍 두 여정 진단</title>
+<meta name="description" content="한국체육산업개발 공공데이터로 올림픽공원 방문객 여정과 공원 운영 여정이 어긋나는 접점을 찾는 진단 서비스">
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1d2330;--sub:#5b6474;--line:#dfe3ea;--a:#2f6fdb;--a2:#e0882b;--a3:#2a9d6f;--warn:#d64545;--soft:#eef3fc;--heat0:#f1f4f9;--heat1:#c9dbf7;--heat2:#8fb4ee;--heat3:#4f86e0;--heat4:#2559b5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b2029;--ink:#e8ebf1;--sub:#a3acbb;--line:#2c3340;--a:#6d9cf0;--a2:#f0a457;--a3:#4cc293;--warn:#f07272;--soft:#1f2836;--heat0:#222a36;--heat1:#26406a;--heat2:#2f5797;--heat3:#4477cc;--heat4:#79a4f2}}
+:root[data-theme="dark"]{--bg:#12151b;--card:#1b2029;--ink:#e8ebf1;--sub:#a3acbb;--line:#2c3340;--a:#6d9cf0;--a2:#f0a457;--a3:#4cc293;--warn:#f07272;--soft:#1f2836;--heat0:#222a36;--heat1:#26406a;--heat2:#2f5797;--heat3:#4477cc;--heat4:#79a4f2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;word-break:keep-all}
+header{padding:28px 16px 12px;max-width:1080px;margin:0 auto}
+h1{font-size:1.55rem;margin:0 0 6px}
+.lead{color:var(--sub);margin:0}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .in{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
+nav button{border:0;background:none;color:var(--sub);padding:12px 12px;font:inherit;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+nav button.on{color:var(--a);border-color:var(--a)}
+main{max-width:1080px;margin:0 auto;padding:16px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+h2{font-size:1.2rem;margin:0 0 4px}h3{font-size:1rem;margin:0 0 8px}
+.muted{color:var(--sub);font-size:.88rem}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+label{font-size:.85rem;color:var(--sub);display:block;margin-bottom:4px}
+select{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:140px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.kpi{background:var(--soft);border-radius:10px;padding:12px}
+.kpi b{display:block;font-size:1.35rem}
+.advice li{margin-bottom:6px}
+svg text{fill:var(--sub);font-size:11px}
+.legend{display:flex;gap:14px;font-size:.82rem;color:var(--sub);flex-wrap:wrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.grid{overflow-x:auto}
+table.map{border-collapse:separate;border-spacing:4px;min-width:860px;width:100%}
+table.map th{font-size:.8rem;color:var(--sub);text-align:left;font-weight:600;padding:4px 6px;vertical-align:top;width:120px}
+table.map td{background:var(--heat0);border-radius:8px;padding:8px;font-size:.82rem;vertical-align:top}
+table.map thead td{background:none;font-weight:700;font-size:.9rem;text-align:center;color:var(--ink)}
+td.gap{outline:2px solid var(--warn)}
+.tag{display:block;font-size:.72rem;line-height:1.4;padding:4px 7px;border-radius:6px;background:var(--warn);color:#fff;margin-top:4px}
+.step{display:flex;gap:10px;margin-bottom:10px}
+.step .n{flex:0 0 28px;height:28px;border-radius:50%;background:var(--a);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+.unk{border-left:4px solid var(--a2);padding:6px 12px;margin-bottom:10px;background:var(--soft);border-radius:0 8px 8px 0}
+footer{max-width:1080px;margin:0 auto;padding:12px 16px 40px;color:var(--sub);font-size:.8rem}
+a{color:var(--a)}
+</style>
+</head>
+<body>
+<header>
+<h1>올팍 두 여정 진단</h1>
+<p class="lead">방문객이 겪는 여정과 공원이 제공하는 서비스 여정을 나란히 놓고, 공공데이터로 두 여정이 어긋나는 접점을 찾습니다.</p>
+</header>
+<nav><div class="in">
+<button data-t="plan" class="on">방문 계획 도우미</button>
+<button data-t="map">이중 여정 지도</button>
+<button data-t="unknown">몰랐던 접점</button>
+<button data-t="method">데이터와 방법</button>
+</div></nav>
+<main>
+
+<section id="plan" class="on">
+<div class="card">
+<h2>언제 도착하고 언제 나오면 덜 붐빌까</h2>
+<p class="muted">2024년 7월 입출차 기록 215,528건과 2025~2026년 주차장 혼잡도 기록 699건으로 만든 시간대별 참고값입니다. 실시간 정보가 아닙니다.</p>
+<div class="row" style="margin-top:12px">
+<div><label for="dw">요일</label><select id="dw"><option value="weekday">평일</option><option value="weekend">주말</option></select></div>
+<div><label for="pp">방문 목적</label><select id="pp"><option value="walk">산책과 휴식</option><option value="show">공연 관람</option><option value="sport">운동시설 이용</option></select></div>
+<div><label for="hr">도착 예정 시각</label><select id="hr"></select></div>
+</div>
+<div class="kpis" id="kpis"></div>
+</div>
+<div class="card">
+<h3>시간대별 입차와 출차 (하루 평균)</h3>
+<div class="legend"><span><i class="sw" style="background:var(--a)"></i>입차</span><span><i class="sw" style="background:var(--a2)"></i>출차</span><span><i class="sw" style="background:var(--warn)"></i>선택한 도착 시각</span></div>
+<div id="flow"></div>
+</div>
+<div class="card"><h3>이 시간대에 맞춘 안내</h3><ul class="advice" id="advice"></ul></div>
+</section>
+
+<section id="map">
+<div class="card">
+<h2>이중 여정 지도</h2>
+<p class="muted">위 두 줄은 방문객 여정, 아래 두 줄은 공원 운영 여정입니다. 칸 색이 짙을수록 그 단계에서 방문객 질문(공식 FAQ)이 많습니다. 빨간 테두리는 두 여정이 어긋나는 접점입니다.</p>
+<div class="grid"><table class="map" id="jmap"></table></div>
+</div>
+<div class="card">
+<h3>단계별 방문객 질문 수와 공원 공지 수</h3>
+<p class="muted">질문은 공식 FAQ 중 올림픽공원 관련 37건, 공지는 핫뉴스 126건입니다. 공지의 47%(59건)는 대관과 공모처럼 사업자를 대상으로 한 글이라 그래프에서 뺐습니다. 공지 분류는 제목 키워드 기준입니다.</p>
+<div id="vocbar"></div>
+</div>
+</section>
+
+<section id="unknown">
+<div class="card">
+<h2>데이터로 드러난, 기존 여정에 없던 접점</h2>
+<p class="muted">질문이나 데이터 신호는 있는데 공원 운영 여정에 대응 단계가 없거나 약한 곳입니다.</p>
+<div id="unk"></div>
+</div>
+</section>
+
+<section id="method">
+<div class="card">
+<h2>진단 절차</h2>
+<div class="step"><div class="n">1</div><div><b>방문객 여정을 먼저 세움</b><br>고객 경험을 구매 전, 구매, 구매 후로 나누는 틀(Lemon &amp; Verhoef, 2016)을 공원 방문에 옮겨 계획, 이동, 주차와 입장, 공원 이용, 공연과 행사, 퇴장과 정산, 사후의 7단계를 먼저 정했습니다.</div></div>
+<div class="step"><div class="n">2</div><div><b>공원 운영 여정을 맞세움</b><br>FAQ 답변과 핫뉴스 공지에 적힌 운영 내용(개방 시간, 매점 시간, 주차 요금 체계, 안내센터, 유실물 접수)을 같은 7단계에 배치했습니다. 고객 행동과 이를 받치는 운영 활동을 한 장에 그리는 서비스 블루프린트 방식(Bitner, Ostrom, &amp; Morgan, 2008)을 따랐습니다.</div></div>
+<div class="step"><div class="n">3</div><div><b>VOC가 생기는 위치를 표시함</b><br>공식 FAQ 49건을 하나씩 읽고 단계를 붙였습니다. 미사경정공원 12건은 제외했습니다.</div></div>
+<div class="step"><div class="n">4</div><div><b>세 가지 질문으로 어긋난 접점을 고름</b><br>① 방문객이 실제로 겪는가(질문이나 행동 데이터가 있는가) ② 공원 운영 여정에 대응 단계가 있는가 ③ 규모가 큰가(영향받는 차량이나 방문객 수). ①과 ③은 그렇고 ②가 약하면 어긋난 접점으로 표시했습니다.</div></div>
+</div>
+<div class="card">
+<h2>활용 데이터</h2>
+<ul>
+<li>한국체육산업개발주식회사_올림픽공원 입출차 정보 (공공데이터포털 15138735, 2024.7.1~7.31, 215,528건)</li>
+<li>한국체육산업개발주식회사_주차장 혼잡도 정보 (15164156, 2025.2~2026.8 중 92일, 699건)</li>
+<li>한국체육산업개발주식회사_월별주차현황 (15131671, 2023.1~2025.12)</li>
+<li>한국체육산업개발주식회사_자주 묻는 질문정보 (15089962, 49건)</li>
+<li>한국체육산업개발주식회사_올림픽공원 핫뉴스 정보 (15090715, 126건)</li>
+<li>한국체육산업개발주식회사_영문 공연정보 (15149169, 공연일자 필드로 2024년 7월 공연일 확인)</li>
+</ul>
+<p class="muted">한계: 입출차 데이터는 2024년 7월 한 달치이며 차량 기준입니다. 도보와 대중교통 방문객은 포함되지 않습니다. FAQ는 기관이 정리한 질문이므로 원시 민원 전체가 아닙니다. 공연일과 출차 증가의 관계는 상관이며 인과로 해석하지 않습니다.</p>
+<p class="muted">참고문헌: Lemon, K. N., &amp; Verhoef, P. C. (2016). Understanding customer experience throughout the customer journey. Journal of Marketing, 80(6), 69-96. / Bitner, M. J., Ostrom, A. L., &amp; Morgan, F. N. (2008). Service blueprinting: A practical technique for service innovation. California Management Review, 50(3), 66-94.</p>
+</div>
+</section>
+</main>
+<footer>공공데이터 출처: 공공데이터포털(data.go.kr) 한국체육산업개발주식회사 개방 데이터. 이 페이지는 공공데이터 활용 사례로 만든 비공식 서비스입니다.</footer>
+
+<script>
+const D={
+in:{weekday:[211,158,130,179,531,7805,8225,6609,17413,12623,11427,6802,7923,10742,8482,8612,8109,10341,11638,9830,8331,2627,997,381],weekend:[105,68,35,37,71,313,875,1342,3349,4181,4959,3900,3819,5246,4801,5635,5544,3214,2109,1903,2003,1193,484,216]},
+out:{weekday:[262,170,112,117,110,520,2898,9789,12847,6672,10440,11865,12061,8213,7593,9708,10305,10990,10986,8407,9022,9963,6387,689],weekend:[130,89,52,36,48,118,471,878,1396,2228,3534,3912,4858,4191,3498,4960,4643,4548,3459,2707,4455,3583,1236,372]},
+days:{weekday:23,weekend:8},
+cong:{"08":{"혼잡":1,"원활":1},"09":{"혼잡":10,"원활":19,"만차":6},"10":{"혼잡":41,"원활":44,"만차":17},"11":{"만차":19,"혼잡":34,"원활":17},"12":{"만차":12,"혼잡":11,"원활":1},"13":{"혼잡":50,"만차":59,"원활":24},"14":{"혼잡":35,"만차":53,"원활":15},"15":{"혼잡":25,"만차":51,"원활":9},"16":{"만차":27,"원활":8,"혼잡":13},"17":{"혼잡":7,"만차":10,"원활":1},"18":{"원활":19,"혼잡":9},"19":{"원활":3},"20":{"만차":2,"원활":11},"21":{"원활":25,"혼잡":3}}
+};
+const $=s=>document.querySelector(s);
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));try{localStorage.setItem('tab',b.dataset.t)}catch(e){}});
+try{const t=localStorage.getItem('tab');if(t){const b=document.querySelector(`nav button[data-t="${t}"]`);b&&b.click()}}catch(e){}
+for(let h=6;h<=21;h++){const o=document.createElement('option');o.value=h;o.textContent=h+'시';if(h===14)o.selected=true;$('#hr').appendChild(o)}
+function bars(el,dw,sel){const W=Math.max(320,Math.min(1000,el.clientWidth||900)),H=220,p=28,bw=(W-p*2)/24;const di=D.in[dw].map(v=>v/D.days[dw]),dout=D.out[dw].map(v=>v/D.days[dw]);const mx=Math.max(...di,...dout);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="시간대별 하루 평균 입차와 출차">`;for(let h=0;h<24;h++){const x=p+h*bw;if(h===+sel)s+=`<rect x="${x}" y="8" width="${bw}" height="${H-p-8}" fill="var(--warn)" opacity=".12"/>`;const a=di[h]/mx*(H-p-16),b=dout[h]/mx*(H-p-16);s+=`<rect x="${x+bw*.1}" y="${H-p-a}" width="${bw*.38}" height="${a}" rx="2" fill="var(--a)"><title>${h}시 입차 ${Math.round(di[h])}대</title></rect><rect x="${x+bw*.52}" y="${H-p-b}" width="${bw*.38}" height="${b}" rx="2" fill="var(--a2)"><title>${h}시 출차 ${Math.round(dout[h])}대</title></rect>`;if(h%3===0)s+=`<text x="${x+bw/2}" y="${H-10}" text-anchor="middle">${h}시</text>`}s+=`<line x1="${p}" x2="${W-p}" y1="${H-p}" y2="${H-p}" stroke="var(--line)"/></svg>`;el.innerHTML=s}
+function render(){const dw=$('#dw').value,pp=$('#pp').value,h=+$('#hr').value;bars($('#flow'),dw,h);const hk=String(h).padStart(2,'0');const c=D.cong[hk]||{};const tot=(c['원활']||0)+(c['혼잡']||0)+(c['만차']||0);const full=tot?Math.round((c['만차']||0)/tot*100):null;const inAvg=Math.round(D.in[dw][h]/D.days[dw]);const peak=D.in[dw].indexOf(Math.max(...D.in[dw]));const outPeak=D.out[dw].slice(17).indexOf(Math.max(...D.out[dw].slice(17)))+17;
+$('#kpis').innerHTML=`<div class="kpi"><span class="muted">이 시각 하루 평균 입차</span><b>${inAvg.toLocaleString()}대</b></div><div class="kpi"><span class="muted">이 시각 '만차' 기록 비율</span><b>${full===null?'기록 없음':full+'%'}</b><span class="muted">${tot?'기록 '+tot+'건 기준':''}</span></div><div class="kpi"><span class="muted">${dw==='weekday'?'평일':'주말'} 입차가 가장 많은 시각</span><b>${peak}시</b></div>`;
+const adv=[];if(full!==null&&full>=40)adv.push(`${h}시는 혼잡도 기록의 ${full}%가 만차였습니다. 대중교통(5호선과 9호선 올림픽공원역, 8호선 몽촌토성역)을 먼저 고려하세요.`);else if(full!==null)adv.push(`${h}시 만차 기록 비율은 ${full}%로 낮은 편입니다.`);
+if(h>=18)adv.push('옥외 매점은 10시부터 18시까지 운영합니다. 18시 이후 도착하면 핸드볼경기장 앞 본점(22시까지)을 이용하세요.');
+if(pp==='show'){adv.push('공연이 있던 날(2024.7.12, 7.20) 21시 이후 출차는 7월 중앙값(721대)의 약 2.1배였습니다. 공연 종료 직후 출차가 몰리므로 정산을 미리 확인하세요.');adv.push('주차 요금은 공연 관람 여부와 관계없이 10분당 600원 후불제입니다(공식 FAQ).');adv.push('공식 FAQ는 공연 임박 시 주차에 1시간가량 여유를 두라고 안내합니다.')}
+if(pp==='walk')adv.push('도보와 자전거 출입은 5시부터 22시까지, 평화의광장과 만남의광장은 24시까지입니다. 차량 출입은 6시부터 22시까지입니다.');
+if(pp==='sport')adv.push(`${dw==='weekday'?'평일 5시에서 7시 사이 입차가 하루 평균 984대로 주말(316대)의 약 3배입니다. 새벽 운동 이용자가 많은 시간대입니다.':'주말 오전 이른 시간은 입차가 적어 비교적 여유롭습니다.'}`);
+adv.push(`이 데이터에서 저녁 출차가 가장 많은 시각은 ${outPeak}시입니다.`);$('#advice').innerHTML=adv.map(a=>`<li>${a}</li>`).join('')}
+['#dw','#pp','#hr'].forEach(s=>$(s).onchange=render);addEventListener('resize',render);render();
+
+const ST=['계획','이동','주차와 입장','공원 이용','공연과 행사','퇴장과 정산','사후'];
+const VOC=[6,2,5,16,2,2,1];
+const NEWS=[10,0,12,19,25,0,1];
+const rows=[
+['방문객 행동',['개방 시간, 꽃 시기 확인','지하철, 버스, 자가용 선택','주차장 찾기, 공연장까지 걷기','산책, 화장실, 매점, 반려견, 자전거','공연 입장과 관람','출차, 요금 정산, 귀가','분실물 찾기, 재방문']],
+['방문객 질문(FAQ)',null],
+['공원 운영 활동',['홈페이지, 핫뉴스 공지','대중교통 안내','주차매표소 5곳, 주차장 2,800여 면','안내센터, 매점 10~18시, 화장실 13곳','대관 공연 운영, 화장실 임시 전환','후불 정산, 차량 출입 22시까지','유실물센터, QR 접수(2025.11)']],
+['데이터 신호',['공지 126건 중 47%가 사업자 대상','데이터 없음','만차 기록 263건 중 62%가 13~15시','18~21시대 입차가 전체의 18.4%','공연일 21시 이후 출차 약 2.1배','21시 이후 출차 10.3%, 22시 이후 4.0%','30분 미만 체류 37.7%']]];
+const GAP={0:'정보 채널이 방문객보다 사업자 공지에 쏠림',3:'저녁 방문객과 매점 운영 시간이 어긋남',4:'공연 종료 시각과 출차, 정산 운영이 어긋남',5:'22시 이후에도 출차가 이어짐'};
+const heat=v=>v>=12?'var(--heat4)':v>=5?'var(--heat3)':v>=3?'var(--heat2)':v>=1?'var(--heat1)':'var(--heat0)';
+let t='<thead><tr><th></th>'+ST.map(s=>`<td>${s}</td>`).join('')+'</tr></thead><tbody>';
+rows.forEach(([k,vals],ri)=>{t+=`<tr><th>${k}</th>`;ST.forEach((s,i)=>{if(ri===1){t+=`<td style="background:${heat(VOC[i])};color:${VOC[i]>=5?'#fff':'inherit'};text-align:center;font-weight:700">${VOC[i]}건</td>`}else{const g=ri===3&&GAP[i];t+=`<td class="${g?'gap':''}">${vals[i]}${g?`<br><span class="tag">${GAP[i]}</span>`:''}</td>`}});t+='</tr>'});
+$('#jmap').innerHTML=t+'</tbody>';
+(function(){const el=$('#vocbar'),W=760,H=40*ST.length+20,l=100,mx=25;let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="단계별 질문 수와 공지 수">`;ST.forEach((st,i)=>{const y=10+i*40;const a=VOC[i]/mx*(W-l-60),b=NEWS[i]/mx*(W-l-60);s+=`<text x="${l-8}" y="${y+16}" text-anchor="end">${st}</text><rect x="${l}" y="${y}" width="${a}" height="13" rx="2" fill="var(--a)"/><text x="${l+a+4}" y="${y+11}">질문 ${VOC[i]}</text><rect x="${l}" y="${y+16}" width="${b}" height="13" rx="2" fill="var(--a3)"/><text x="${l+b+4}" y="${y+27}">공지 ${NEWS[i]}</text>`});el.innerHTML=s+'</svg>'})();
+const UNK=[
+['인근 주민','야외 무료공연 소음 불만이 FAQ에 있습니다. 공원을 방문하지 않는 주민도 공연 운영의 접점에 들어와 있지만, 방문객 여정에는 이 단계가 없습니다.'],
+['공연장 안 화장실','여자화장실 부족 불만에 공원은 남자화장실을 임시 전환해 대응합니다. 공연별 관객 구성 정보와 연결된 사전 운영 단계는 확인되지 않습니다.'],
+['짧게 머무는 차량','입출차 기록의 37.7%가 30분 미만 체류입니다. 공원 이용보다는 승하차나 통과에 가까운 차량으로 보이며, 이들을 위한 안내나 동선은 공지와 FAQ에 거의 없습니다.'],
+['새벽 운동 이용자','평일 5시에서 7시 사이 입차가 하루 평균 984대입니다. 매점은 10시, 안내센터 운영은 낮 시간 중심이라 이 시간대 방문객은 운영 여정의 바깥에 있습니다.'],
+['시설 외관에 대한 불안','체조경기장 천장 케이블이 녹슨 것처럼 보인다는 질문이 있습니다. 시설 상태를 방문객에게 설명하는 접점이 따로 없습니다.']];
+$('#unk').innerHTML=UNK.map(([a,b])=>`<div class="unk"><b>${a}</b><br>${b}</div>`).join('');
+</script>
+</body>
+</html>
