@@ -1,0 +1,200 @@
+{
+ "pearson": {
+  "late_exit21": {
+   "late_exit21": 1.0,
+   "total_in": 0.657,
+   "early_in5_7": 0.171,
+   "short_dwell_share": -0.281,
+   "concert": 0.698,
+   "weekend": -0.179
+  },
+  "total_in": {
+   "late_exit21": 0.657,
+   "total_in": 1.0,
+   "early_in5_7": 0.052,
+   "short_dwell_share": 0.151,
+   "concert": 0.514,
+   "weekend": -0.027
+  },
+  "early_in5_7": {
+   "late_exit21": 0.171,
+   "total_in": 0.052,
+   "early_in5_7": 1.0,
+   "short_dwell_share": -0.612,
+   "concert": -0.032,
+   "weekend": -0.984
+  },
+  "short_dwell_share": {
+   "late_exit21": -0.281,
+   "total_in": 0.151,
+   "early_in5_7": -0.612,
+   "short_dwell_share": 1.0,
+   "concert": 0.046,
+   "weekend": 0.654
+  },
+  "concert": {
+   "late_exit21": 0.698,
+   "total_in": 0.514,
+   "early_in5_7": -0.032,
+   "short_dwell_share": 0.046,
+   "concert": 1.0,
+   "weekend": 0.056
+  },
+  "weekend": {
+   "late_exit21": -0.179,
+   "total_in": -0.027,
+   "early_in5_7": -0.984,
+   "short_dwell_share": 0.654,
+   "concert": 0.056,
+   "weekend": 1.0
+  }
+ },
+ "spearman_late_exit21": {
+  "late_exit21": 1.0,
+  "total_in": 0.513,
+  "early_in5_7": 0.418,
+  "short_dwell_share": -0.365,
+  "concert": 0.415,
+  "weekend": -0.387
+ },
+ "m1_late_exit21": {
+  "Intercept": {
+   "b": 693.7767,
+   "se_hc3": 26.3557,
+   "p": 0.0,
+   "ci95": [
+    642.1205,
+    745.4328
+   ]
+  },
+  "concert": {
+   "b": 541.0684,
+   "se_hc3": 349.5173,
+   "p": 0.1216,
+   "ci95": [
+    -143.9728,
+    1226.1097
+   ]
+  },
+  "weekend": {
+   "b": -112.5352,
+   "se_hc3": 110.2927,
+   "p": 0.3076,
+   "ci95": [
+    -328.7049,
+    103.6344
+   ]
+  },
+  "n": 31,
+  "r2": 0.535,
+  "adj_r2": 0.501
+ },
+ "m2_with_total_in": {
+  "Intercept": {
+   "b": -321.7349,
+   "se_hc3": 649.7576,
+   "p": 0.6205,
+   "ci95": [
+    -1595.2363,
+    951.7665
+   ]
+  },
+  "concert": {
+   "b": 387.2826,
+   "se_hc3": 371.4712,
+   "p": 0.2972,
+   "ci95": [
+    -340.7875,
+    1115.3528
+   ]
+  },
+  "weekend": {
+   "b": -101.2535,
+   "se_hc3": 109.4635,
+   "p": 0.355,
+   "ci95": [
+    -315.7982,
+    113.2911
+   ]
+  },
+  "total_in": {
+   "b": 0.1478,
+   "se_hc3": 0.0933,
+   "p": 0.1131,
+   "ci95": [
+    -0.035,
+    0.3306
+   ]
+  },
+  "n": 31,
+  "r2": 0.646,
+  "adj_r2": 0.607
+ },
+ "m3_late_share": {
+  "Intercept": {
+   "b": 0.1011,
+   "se_hc3": 0.0033,
+   "p": 0.0,
+   "ci95": [
+    0.0946,
+    0.1076
+   ]
+  },
+  "concert": {
+   "b": 0.0542,
+   "se_hc3": 0.0402,
+   "p": 0.1769,
+   "ci95": [
+    -0.0245,
+    0.133
+   ]
+  },
+  "weekend": {
+   "b": -0.0162,
+   "se_hc3": 0.0139,
+   "p": 0.2439,
+   "ci95": [
+    -0.0434,
+    0.011
+   ]
+  },
+  "n": 31,
+  "r2": 0.467,
+  "adj_r2": 0.429
+ },
+ "leave_one_concert_out": {
+  "07-01": {
+   "b_concert": 809.7,
+   "p": 0.0007
+  },
+  "07-12": {
+   "b_concert": 474.2,
+   "p": 0.4927
+  },
+  "07-20": {
+   "b_concert": 329.3,
+   "p": 0.4691
+  }
+ },
+ "late_exit21_median": 696.0,
+ "concert_days": [
+  {
+   "date": "07-01",
+   "dow": "월",
+   "late_exit21": 720,
+   "late_share": 0.10096760622633572
+  },
+  {
+   "date": "07-12",
+   "dow": "금",
+   "late_exit21": 1363,
+   "late_share": 0.15821242019733023
+  },
+  {
+   "date": "07-20",
+   "dow": "토",
+   "late_exit21": 1509,
+   "late_share": 0.19067475360121305
+  }
+ ]
+}
