@@ -5,53 +5,86 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>올팍 두 여정 진단</title>
 <meta name="description" content="한국체육산업개발 공공데이터로 올림픽공원 방문객 여정과 공원 운영 여정이 어긋나는 접점을 찾는 진단 서비스">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f7f8fa;--card:#fff;--ink:#1d2330;--sub:#5b6474;--line:#dfe3ea;--a:#2f6fdb;--a2:#e0882b;--a3:#2a9d6f;--warn:#d64545;--soft:#eef3fc;--heat0:#f1f4f9;--heat1:#c9dbf7;--heat2:#8fb4ee;--heat3:#4f86e0;--heat4:#2559b5}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b2029;--ink:#e8ebf1;--sub:#a3acbb;--line:#2c3340;--a:#6d9cf0;--a2:#f0a457;--a3:#4cc293;--warn:#f07272;--soft:#1f2836;--heat0:#222a36;--heat1:#26406a;--heat2:#2f5797;--heat3:#4477cc;--heat4:#79a4f2}}
-:root[data-theme="dark"]{--bg:#12151b;--card:#1b2029;--ink:#e8ebf1;--sub:#a3acbb;--line:#2c3340;--a:#6d9cf0;--a2:#f0a457;--a3:#4cc293;--warn:#f07272;--soft:#1f2836;--heat0:#222a36;--heat1:#26406a;--heat2:#2f5797;--heat3:#4477cc;--heat4:#79a4f2}
+:root{--bg:#f6f3ee;--card:#ffffff;--ink:#17213a;--sub:#5d6678;--line:#e7e1d8;--navy:#14213d;--navy2:#22335c;--rose:#c8566a;--gold:#c79a5b;--sage:#6f9a7e;--soft:#f9f4ec;--a:#2c5fbf;--a2:#d88a3a;--a3:#4f8f6c;--warn:#c8566a;--heat0:#f3eee6;--heat1:#f2d6d2;--heat2:#e7a9a8;--heat3:#d27681;--heat4:#a63e55;--shadow:0 10px 30px rgba(20,33,61,.08);--bar1:#22335c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1524;--card:#18213a;--ink:#eef1f7;--sub:#a9b2c6;--line:#2a3554;--soft:#1d2844;--heat0:#222d4a;--heat1:#4a3247;--heat2:#7a3d54;--heat3:#a94c64;--heat4:#d77a8c;--a:#7fa6f2;--a2:#f0a457;--a3:#77c29a;--shadow:0 10px 30px rgba(0,0,0,.35);--bar1:#8fb0f0}}
+:root[data-theme="dark"]{--bg:#0f1524;--card:#18213a;--ink:#eef1f7;--sub:#a9b2c6;--line:#2a3554;--soft:#1d2844;--heat0:#222d4a;--heat1:#4a3247;--heat2:#7a3d54;--heat3:#a94c64;--heat4:#d77a8c;--a:#7fa6f2;--a2:#f0a457;--a3:#77c29a;--shadow:0 10px 30px rgba(0,0,0,.35);--bar1:#8fb0f0}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;word-break:keep-all}
-header{padding:28px 16px 12px;max-width:1080px;margin:0 auto}
-h1{font-size:1.55rem;margin:0 0 6px}
-.lead{color:var(--sub);margin:0}
-nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
-nav .in{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
-nav button{border:0;background:none;color:var(--sub);padding:12px 12px;font:inherit;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
-nav button.on{color:var(--a);border-color:var(--a)}
-main{max-width:1080px;margin:0 auto;padding:16px}
-section{display:none}section.on{display:block}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
-h2{font-size:1.2rem;margin:0 0 4px}h3{font-size:1rem;margin:0 0 8px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.65;word-break:keep-all}
+.hero{background:radial-gradient(1200px 400px at 85% 10%,rgba(199,154,91,.25),transparent 60%),radial-gradient(800px 380px at 10% 110%,rgba(200,86,106,.25),transparent 60%),linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;overflow:hidden}
+.hero .in{max-width:1080px;margin:0 auto;padding:36px 16px 30px;display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:center}
+.eyebrow{display:inline-block;font-size:.78rem;letter-spacing:.08em;color:var(--gold);border:1px solid rgba(199,154,91,.6);border-radius:99px;padding:3px 12px;margin-bottom:12px}
+h1{font-family:"Noto Serif KR",serif;font-weight:900;font-size:clamp(1.7rem,4.2vw,2.6rem);line-height:1.25;margin:0 0 10px}
+h1 em{font-style:normal;color:#f3c7a1}
+.lead{color:#d5dbea;margin:0 0 18px;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:8px 14px;font-size:.82rem;color:#d5dbea}
+.chip b{display:block;font-size:1.15rem;color:#fff}
+.mascot{position:relative;justify-self:center}
+.mascot:before{content:"";position:absolute;inset:12% 8% 2%;background:radial-gradient(circle,rgba(243,199,161,.55),transparent 65%);filter:blur(8px)}
+.mascot img{position:relative;width:220px;height:220px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.85);box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.mascot .name{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--rose);color:#fff;font-size:.78rem;font-weight:700;padding:3px 12px;border-radius:99px;white-space:nowrap}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;gap:6px;overflow-x:auto}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--sub);padding:8px 16px;font:inherit;font-size:.9rem;font-weight:700;cursor:pointer;border-radius:99px;white-space:nowrap}
+nav button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+main{max-width:1080px;margin:0 auto;padding:20px 16px}
+section{display:none}section.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+h2{font-family:"Noto Serif KR",serif;font-size:1.3rem;margin:0 0 6px}
+h2:after{content:"";display:block;width:36px;height:3px;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:2px;margin-top:8px}
+h3{font-size:1rem;margin:0 0 10px}
 .muted{color:var(--sub);font-size:.88rem}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
-label{font-size:.85rem;color:var(--sub);display:block;margin-bottom:4px}
-select{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:140px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
-.kpi{background:var(--soft);border-radius:10px;padding:12px}
-.kpi b{display:block;font-size:1.35rem}
-.advice li{margin-bottom:6px}
+label{font-size:.82rem;color:var(--sub);display:block;margin-bottom:4px;font-weight:500}
+select{font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--soft);color:var(--ink);min-width:150px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+.kpi{background:var(--soft);border-radius:14px;padding:14px 16px;border-left:4px solid var(--gold)}
+.kpi b{display:block;font-size:1.5rem;font-family:"Noto Serif KR",serif}
+.talk{display:flex;gap:14px;align-items:flex-start}
+.talk img{flex:0 0 64px;width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);background:#fff}
+.bubble{position:relative;background:var(--soft);border-radius:16px;padding:14px 18px;flex:1}
+.bubble:before{content:"";position:absolute;left:-8px;top:20px;border:8px solid transparent;border-right-color:var(--soft);border-left:0}
+.bubble b.who{color:var(--rose);font-size:.85rem}
+.advice{margin:6px 0 0;padding-left:18px}.advice li{margin-bottom:6px}
 svg text{fill:var(--sub);font-size:11px}
 .legend{display:flex;gap:14px;font-size:.82rem;color:var(--sub);flex-wrap:wrap}
-.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
 .grid{overflow-x:auto}
-table.map{border-collapse:separate;border-spacing:4px;min-width:860px;width:100%}
-table.map th{font-size:.8rem;color:var(--sub);text-align:left;font-weight:600;padding:4px 6px;vertical-align:top;width:120px}
-table.map td{background:var(--heat0);border-radius:8px;padding:8px;font-size:.82rem;vertical-align:top}
-table.map thead td{background:none;font-weight:700;font-size:.9rem;text-align:center;color:var(--ink)}
-td.gap{outline:2px solid var(--warn)}
-.tag{display:block;font-size:.72rem;line-height:1.4;padding:4px 7px;border-radius:6px;background:var(--warn);color:#fff;margin-top:4px}
-.step{display:flex;gap:10px;margin-bottom:10px}
-.step .n{flex:0 0 28px;height:28px;border-radius:50%;background:var(--a);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
-.unk{border-left:4px solid var(--a2);padding:6px 12px;margin-bottom:10px;background:var(--soft);border-radius:0 8px 8px 0}
+table.map{border-collapse:separate;border-spacing:6px;min-width:880px;width:100%}
+table.map th{font-size:.8rem;color:var(--sub);text-align:left;font-weight:700;padding:6px;vertical-align:top;width:110px}
+table.map td{background:var(--heat0);border-radius:12px;padding:10px;font-size:.82rem;vertical-align:top}
+table.map thead td{background:none;font-weight:700;font-size:.88rem;text-align:center;color:var(--ink);padding:0 0 4px}
+table.map thead td i{display:block;width:28px;height:28px;line-height:28px;margin:0 auto 4px;border-radius:50%;background:var(--navy);color:#fff;font-style:normal;font-size:.8rem}
+tr.lane-cust th{color:var(--a)}tr.lane-ops th{color:var(--a3)}
+td.gap{box-shadow:inset 0 0 0 2px var(--rose);background:color-mix(in srgb,var(--rose) 8%,var(--card))}
+.tag{display:block;font-size:.72rem;line-height:1.4;padding:4px 8px;border-radius:8px;background:var(--rose);color:#fff;margin-top:6px}
+.lanebar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 6px;font-size:.82rem}
+.lanebar span{padding:3px 10px;border-radius:99px;background:var(--soft)}
+.step{display:flex;gap:12px;margin-bottom:12px}
+.step .n{flex:0 0 32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem}
+.unkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:8px}
+.unk{background:var(--soft);border-radius:16px;padding:16px;border-top:4px solid var(--gold);position:relative}
+.unk .no{font-family:"Noto Serif KR",serif;font-size:1.8rem;color:var(--gold);line-height:1}
+.unk b{display:block;margin:6px 0 4px;font-size:1rem}
 footer{max-width:1080px;margin:0 auto;padding:12px 16px 40px;color:var(--sub);font-size:.8rem}
 a{color:var(--a)}
+@media (max-width:720px){.hero .in{grid-template-columns:1fr}.mascot{order:-1}.mascot img{width:150px;height:150px}}
 </style>
 </head>
 <body>
-<header>
-<h1>올팍 두 여정 진단</h1>
+<div class="hero"><div class="in">
+<div>
+<span class="eyebrow">KSPO 공공데이터 활용 사례</span>
+<h1>올팍 두 여정 진단<br><em>방문객의 하루</em>와 <em>공원의 하루</em>가 엇갈리는 곳</h1>
 <p class="lead">방문객이 겪는 여정과 공원이 제공하는 서비스 여정을 나란히 놓고, 공공데이터로 두 여정이 어긋나는 접점을 찾습니다.</p>
-</header>
+<div class="chips"><div class="chip"><b>215,528건</b>입출차 기록</div><div class="chip"><b>6종</b>기관 개방 데이터</div><div class="chip"><b>5곳</b>몰랐던 접점</div></div>
+</div>
+<div class="mascot"><img src="mascot.webp" alt="장미 꽃봉오리 머리에 잎사귀 망토를 두르고 지도와 회중시계를 든 안내 캐릭터 봉이"><span class="name">안내원 봉이</span></div>
+</div></div>
 <nav><div class="in">
 <button data-t="plan" class="on">방문 계획 도우미</button>
 <button data-t="map">이중 여정 지도</button>
@@ -73,16 +106,16 @@ a{color:var(--a)}
 </div>
 <div class="card">
 <h3>시간대별 입차와 출차 (하루 평균)</h3>
-<div class="legend"><span><i class="sw" style="background:var(--a)"></i>입차</span><span><i class="sw" style="background:var(--a2)"></i>출차</span><span><i class="sw" style="background:var(--warn)"></i>선택한 도착 시각</span></div>
+<div class="legend"><span><i class="sw" style="background:var(--bar1)"></i>입차</span><span><i class="sw" style="background:var(--gold)"></i>출차</span><span><i class="sw" style="background:var(--warn)"></i>선택한 도착 시각</span></div>
 <div id="flow"></div>
 </div>
-<div class="card"><h3>이 시간대에 맞춘 안내</h3><ul class="advice" id="advice"></ul></div>
+<div class="card"><div class="talk"><img src="mascot.webp" alt=""><div class="bubble"><b class="who">봉이의 안내</b><ul class="advice" id="advice"></ul></div></div></div>
 </section>
 
 <section id="map">
 <div class="card">
 <h2>이중 여정 지도</h2>
-<p class="muted">위 두 줄은 방문객 여정, 아래 두 줄은 공원 운영 여정입니다. 칸 색이 짙을수록 그 단계에서 방문객 질문(공식 FAQ)이 많습니다. 빨간 테두리는 두 여정이 어긋나는 접점입니다.</p>
+<div class="lanebar"><span style="color:var(--a)">방문객 여정</span><span style="color:var(--a3)">공원 운영 여정</span><span style="color:var(--rose)">어긋난 접점</span></div><p class="muted">위 두 줄은 방문객 여정, 아래 두 줄은 공원 운영 여정입니다. 칸 색이 짙을수록 그 단계에서 방문객 질문(공식 FAQ)이 많습니다. 빨간 테두리는 두 여정이 어긋나는 접점입니다.</p>
 <div class="grid"><table class="map" id="jmap"></table></div>
 </div>
 <div class="card">
@@ -96,7 +129,7 @@ a{color:var(--a)}
 <div class="card">
 <h2>데이터로 드러난, 기존 여정에 없던 접점</h2>
 <p class="muted">질문이나 데이터 신호는 있는데 공원 운영 여정에 대응 단계가 없거나 약한 곳입니다.</p>
-<div id="unk"></div>
+<div class="unkgrid" id="unk"></div>
 </div>
 </section>
 
@@ -123,7 +156,7 @@ a{color:var(--a)}
 </div>
 </section>
 </main>
-<footer>공공데이터 출처: 공공데이터포털(data.go.kr) 한국체육산업개발주식회사 개방 데이터. 이 페이지는 공공데이터 활용 사례로 만든 비공식 서비스입니다.</footer>
+<footer>공공데이터 출처: 공공데이터포털(data.go.kr) 한국체육산업개발주식회사 개방 데이터. 이 페이지는 공공데이터 활용 사례로 만든 비공식 서비스입니다. 캐릭터 이미지는 생성형 AI(Gemini)로 만든 오리지널 이미지입니다.</footer>
 
 <script>
 const D={
@@ -136,7 +169,7 @@ const $=s=>document.querySelector(s);
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));try{localStorage.setItem('tab',b.dataset.t)}catch(e){}});
 try{const t=localStorage.getItem('tab');if(t){const b=document.querySelector(`nav button[data-t="${t}"]`);b&&b.click()}}catch(e){}
 for(let h=6;h<=21;h++){const o=document.createElement('option');o.value=h;o.textContent=h+'시';if(h===14)o.selected=true;$('#hr').appendChild(o)}
-function bars(el,dw,sel){const W=Math.max(320,Math.min(1000,el.clientWidth||900)),H=220,p=28,bw=(W-p*2)/24;const di=D.in[dw].map(v=>v/D.days[dw]),dout=D.out[dw].map(v=>v/D.days[dw]);const mx=Math.max(...di,...dout);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="시간대별 하루 평균 입차와 출차">`;for(let h=0;h<24;h++){const x=p+h*bw;if(h===+sel)s+=`<rect x="${x}" y="8" width="${bw}" height="${H-p-8}" fill="var(--warn)" opacity=".12"/>`;const a=di[h]/mx*(H-p-16),b=dout[h]/mx*(H-p-16);s+=`<rect x="${x+bw*.1}" y="${H-p-a}" width="${bw*.38}" height="${a}" rx="2" fill="var(--a)"><title>${h}시 입차 ${Math.round(di[h])}대</title></rect><rect x="${x+bw*.52}" y="${H-p-b}" width="${bw*.38}" height="${b}" rx="2" fill="var(--a2)"><title>${h}시 출차 ${Math.round(dout[h])}대</title></rect>`;if(h%3===0)s+=`<text x="${x+bw/2}" y="${H-10}" text-anchor="middle">${h}시</text>`}s+=`<line x1="${p}" x2="${W-p}" y1="${H-p}" y2="${H-p}" stroke="var(--line)"/></svg>`;el.innerHTML=s}
+function bars(el,dw,sel){const W=Math.max(320,Math.min(1000,el.clientWidth||900)),H=220,p=28,bw=(W-p*2)/24;const di=D.in[dw].map(v=>v/D.days[dw]),dout=D.out[dw].map(v=>v/D.days[dw]);const mx=Math.max(...di,...dout);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="시간대별 하루 평균 입차와 출차">`;for(let h=0;h<24;h++){const x=p+h*bw;if(h===+sel)s+=`<rect x="${x}" y="8" width="${bw}" height="${H-p-8}" fill="var(--rose)" opacity=".14"/>`;const a=di[h]/mx*(H-p-16),b=dout[h]/mx*(H-p-16);s+=`<rect x="${x+bw*.1}" y="${H-p-a}" width="${bw*.38}" height="${a}" rx="2" fill="var(--bar1)"><title>${h}시 입차 ${Math.round(di[h])}대</title></rect><rect x="${x+bw*.52}" y="${H-p-b}" width="${bw*.38}" height="${b}" rx="2" fill="var(--gold)"><title>${h}시 출차 ${Math.round(dout[h])}대</title></rect>`;if(h%3===0)s+=`<text x="${x+bw/2}" y="${H-10}" text-anchor="middle">${h}시</text>`}s+=`<line x1="${p}" x2="${W-p}" y1="${H-p}" y2="${H-p}" stroke="var(--line)"/></svg>`;el.innerHTML=s}
 function render(){const dw=$('#dw').value,pp=$('#pp').value,h=+$('#hr').value;bars($('#flow'),dw,h);const hk=String(h).padStart(2,'0');const c=D.cong[hk]||{};const tot=(c['원활']||0)+(c['혼잡']||0)+(c['만차']||0);const full=tot?Math.round((c['만차']||0)/tot*100):null;const inAvg=Math.round(D.in[dw][h]/D.days[dw]);const peak=D.in[dw].indexOf(Math.max(...D.in[dw]));const outPeak=D.out[dw].slice(17).indexOf(Math.max(...D.out[dw].slice(17)))+17;
 $('#kpis').innerHTML=`<div class="kpi"><span class="muted">이 시각 하루 평균 입차</span><b>${inAvg.toLocaleString()}대</b></div><div class="kpi"><span class="muted">이 시각 '만차' 기록 비율</span><b>${full===null?'기록 없음':full+'%'}</b><span class="muted">${tot?'기록 '+tot+'건 기준':''}</span></div><div class="kpi"><span class="muted">${dw==='weekday'?'평일':'주말'} 입차가 가장 많은 시각</span><b>${peak}시</b></div>`;
 const adv=[];if(full!==null&&full>=40)adv.push(`${h}시는 혼잡도 기록의 ${full}%가 만차였습니다. 대중교통(5호선과 9호선 올림픽공원역, 8호선 몽촌토성역)을 먼저 고려하세요.`);else if(full!==null)adv.push(`${h}시 만차 기록 비율은 ${full}%로 낮은 편입니다.`);
@@ -157,8 +190,8 @@ const rows=[
 ['데이터 신호',['공지 126건 중 47%가 사업자 대상','데이터 없음','만차 기록 263건 중 62%가 13~15시','18~21시대 입차가 전체의 18.4%','공연일 21시 이후 출차 약 2.1배','21시 이후 출차 10.3%, 22시 이후 4.0%','30분 미만 체류 37.7%']]];
 const GAP={0:'정보 채널이 방문객보다 사업자 공지에 쏠림',3:'저녁 방문객과 매점 운영 시간이 어긋남',4:'공연 종료 시각과 출차, 정산 운영이 어긋남',5:'22시 이후에도 출차가 이어짐'};
 const heat=v=>v>=12?'var(--heat4)':v>=5?'var(--heat3)':v>=3?'var(--heat2)':v>=1?'var(--heat1)':'var(--heat0)';
-let t='<thead><tr><th></th>'+ST.map(s=>`<td>${s}</td>`).join('')+'</tr></thead><tbody>';
-rows.forEach(([k,vals],ri)=>{t+=`<tr><th>${k}</th>`;ST.forEach((s,i)=>{if(ri===1){t+=`<td style="background:${heat(VOC[i])};color:${VOC[i]>=5?'#fff':'inherit'};text-align:center;font-weight:700">${VOC[i]}건</td>`}else{const g=ri===3&&GAP[i];t+=`<td class="${g?'gap':''}">${vals[i]}${g?`<br><span class="tag">${GAP[i]}</span>`:''}</td>`}});t+='</tr>'});
+let t='<thead><tr><th></th>'+ST.map((s,i)=>`<td><i>${i+1}</i>${s}</td>`).join('')+'</tr></thead><tbody>';
+rows.forEach(([k,vals],ri)=>{t+=`<tr class="${ri<2?'lane-cust':'lane-ops'}"><th>${k}</th>`;ST.forEach((s,i)=>{if(ri===1){t+=`<td style="background:${heat(VOC[i])};color:${VOC[i]>=3?'#fff':'inherit'};text-align:center;font-weight:700">${VOC[i]}건</td>`}else{const g=ri===3&&GAP[i];t+=`<td class="${g?'gap':''}">${vals[i]}${g?`<br><span class="tag">${GAP[i]}</span>`:''}</td>`}});t+='</tr>'});
 $('#jmap').innerHTML=t+'</tbody>';
 (function(){const el=$('#vocbar'),W=760,H=40*ST.length+20,l=100,mx=25;let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="단계별 질문 수와 공지 수">`;ST.forEach((st,i)=>{const y=10+i*40;const a=VOC[i]/mx*(W-l-60),b=NEWS[i]/mx*(W-l-60);s+=`<text x="${l-8}" y="${y+16}" text-anchor="end">${st}</text><rect x="${l}" y="${y}" width="${a}" height="13" rx="2" fill="var(--a)"/><text x="${l+a+4}" y="${y+11}">질문 ${VOC[i]}</text><rect x="${l}" y="${y+16}" width="${b}" height="13" rx="2" fill="var(--a3)"/><text x="${l+b+4}" y="${y+27}">공지 ${NEWS[i]}</text>`});el.innerHTML=s+'</svg>'})();
 const UNK=[
@@ -167,7 +200,7 @@ const UNK=[
 ['짧게 머무는 차량','입출차 기록의 37.7%가 30분 미만 체류입니다. 공원 이용보다는 승하차나 통과에 가까운 차량으로 보이며, 이들을 위한 안내나 동선은 공지와 FAQ에 거의 없습니다.'],
 ['새벽 운동 이용자','평일 5시에서 7시 사이 입차가 하루 평균 984대입니다. 매점은 10시, 안내센터 운영은 낮 시간 중심이라 이 시간대 방문객은 운영 여정의 바깥에 있습니다.'],
 ['시설 외관에 대한 불안','체조경기장 천장 케이블이 녹슨 것처럼 보인다는 질문이 있습니다. 시설 상태를 방문객에게 설명하는 접점이 따로 없습니다.']];
-$('#unk').innerHTML=UNK.map(([a,b])=>`<div class="unk"><b>${a}</b><br>${b}</div>`).join('');
+$('#unk').innerHTML=UNK.map(([a,b],i)=>`<div class="unk"><span class="no">0${i+1}</span><b>${a}</b><span class="muted" style="font-size:.9rem;color:var(--ink)">${b}</span></div>`).join('');
 </script>
 </body>
 </html>
